@@ -1,9 +1,11 @@
 #![feature(conservative_impl_trait)]
 extern crate unix_socket;
+extern crate uuid;
 
 use unix_socket::UnixStream;
 use std::io::Read;
 use std::io::Write;
+use uuid::Uuid;
 
 trait Connection{
     fn write(&mut self, buffer : &[u8] , offset : i32 , size : i32 , immediate : bool);
@@ -33,11 +35,16 @@ impl PipeConnectionInitiator{
             buffer_size : buffer_size
         }  
     } 
+
+    fn get_pipe_name(&self)->String{
+        Uuid::new_v4().simple().to_string()
+    }
 }
 
 impl ConnectionInitiator for PipeConnectionInitiator{
     fn connect(&mut self, uri : Uri) -> Box<Connection>{
-        let stream = UnixStream::connect("").unwrap();
+        let pipe_name = self.get_pipe_name();
+        let stream = UnixStream::connect(pipe_name).unwrap();
         Box::new(PipeConnection::new(stream, self.buffer_size))
     }
 }
