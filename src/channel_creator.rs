@@ -2,15 +2,18 @@ use channel_factory::ChannelFactory;
 use uri::Uri;
 use endpoint::EndPoint;
 use communication_object::CommunicationObject;
+use binding::Binding;
 
 pub struct ChannelCreator<T>{
-    channel : T
+    channel : T,
+    binding : Option<Box<Binding>>
 }
 
 impl<T> ChannelCreator<T>{
-    pub fn new(channel : T) -> Self{
+    pub fn new(channel : T, binding : Option<Box<Binding>>) -> Self{
         ChannelCreator{
-            channel : channel
+            channel : channel,
+            binding : binding
         }
     }
 }

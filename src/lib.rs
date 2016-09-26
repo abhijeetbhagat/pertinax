@@ -10,10 +10,10 @@ pub mod pipe_connection;
 pub mod connection_initiator;
 pub mod pipe_connection_initiator;
 pub mod communication_object;
+pub mod binding;
+pub mod namedpipe_binding;
 
 use uri::Uri;
-
-
 
 trait ConnectionListener{
     fn accept();
