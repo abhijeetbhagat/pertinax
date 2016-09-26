@@ -9,6 +9,7 @@ pub mod connection;
 pub mod pipe_connection;
 pub mod connection_initiator;
 pub mod pipe_connection_initiator;
+pub mod communication_object;
 
 use uri::Uri;
 
