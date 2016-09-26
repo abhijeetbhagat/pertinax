@@ -1,4 +1,3 @@
-#![feature(conservative_impl_trait)]
 extern crate unix_socket;
 extern crate uuid;
 
@@ -7,14 +6,17 @@ use std::io::Read;
 use std::io::Write;
 use uuid::Uuid;
 
+pub mod uri;
+pub mod channel_factory;
+pub mod channel_creator;
+pub mod endpoint;
+
+use uri::Uri;
+
 trait Connection{
     fn write(&mut self, buffer : &[u8] , offset : i32 , size : i32 , immediate : bool);
     fn read(&mut self,  buffer : &mut [u8], offset : i32, size : i32);
     fn close(&mut self);
-}
-
-struct Uri{
-
 }
 
 trait ConnectionInitiator{
