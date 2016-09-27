@@ -5,24 +5,24 @@ use communication_object::CommunicationObject;
 use binding::Binding;
 
 pub struct ChannelCreator<T>{
-    channel : T,
+    channel : Box<T>,
     binding : Option<Box<Binding>>
 }
 
 impl<T> ChannelCreator<T>{
     pub fn new(channel : T, binding : Option<Box<Binding>>) -> Self{
         ChannelCreator{
-            channel : channel,
+            channel : Box::new(channel),
             binding : binding
         }
     }
 }
 
 impl<T> ChannelFactory<T> for ChannelCreator<T>{
-    fn create_channel(&self, to : EndPoint)->Box<T>{
+    fn create_channel(&mut self, to : EndPoint)->Box<T>{
         unimplemented!();
     }
-    fn create_channel_with_uri(&self, to : EndPoint, uri : Uri)->Box<T>{
+    fn create_channel_with_uri(&mut self, to : EndPoint, uri : Uri)->Box<T>{
         unimplemented!();
     }
 
