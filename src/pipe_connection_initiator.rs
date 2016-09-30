@@ -25,7 +25,7 @@ impl ConnectionInitiator for PipeConnectionInitiator{
     fn connect(&mut self, uri : Uri) -> Box<Connection>{
         let pipe_name = self.get_pipe_name();
         let stream = UnixStream::connect(pipe_name).unwrap();
-        Box::new(PipeConnection::new(stream, self.buffer_size))
+        box PipeConnection::new(stream, self.buffer_size)
     }
 }
 

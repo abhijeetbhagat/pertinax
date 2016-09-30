@@ -1,3 +1,4 @@
+#![feature(box_syntax, box_patterns)]
 extern crate uuid;
 extern crate unix_socket;
 
@@ -24,12 +25,14 @@ trait ConnectionListener{
 mod tests {
     use super::channel_factory::*;
     use super::channel_creator::*;
+    use super::endpoint::*;
 
     trait IService{
         fn foo(&self, a:i32);
         fn bar(&self)->i32;
     }
 
+    #[derive(Clone)]
     struct Client;
 
     impl IService for Client{
@@ -43,6 +46,9 @@ mod tests {
     }
     #[test]
     fn test_usage() {
-        let c : ChannelCreator<Box<IService>> = ChannelCreator::new(Box::new(Client), None);
+        let c = Client;
+        let mut c : ChannelCreator<&IService> = ChannelCreator::new(&c, None);
+        let s : &IService = *c.create_channel(EndPoint);
+        assert!(s.bar() == 0);
     }
 }

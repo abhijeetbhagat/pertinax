@@ -4,31 +4,35 @@ use endpoint::EndPoint;
 use communication_object::CommunicationObject;
 use binding::Binding;
 
-pub struct ChannelCreator<T>{
+pub struct ChannelCreator<T:Clone>{
     channel : Box<T>,
     binding : Option<Box<Binding>>
 }
 
-impl<T> ChannelCreator<T>{
+impl<T:Clone> ChannelCreator<T>{
     pub fn new(channel : T, binding : Option<Box<Binding>>) -> Self{
         ChannelCreator{
-            channel : Box::new(channel),
+            channel : box channel,
             binding : binding
         }
     }
 }
 
-impl<T> ChannelFactory<T> for ChannelCreator<T>{
+impl<T:Clone> ChannelFactory<T> for ChannelCreator<T>{
     fn create_channel(&mut self, to : EndPoint)->Box<T>{
-        unimplemented!();
+        self.channel.clone()
     }
     fn create_channel_with_uri(&mut self, to : EndPoint, uri : Uri)->Box<T>{
-        unimplemented!();
+        self.channel.clone()
     }
 
 }
-impl<T> CommunicationObject for ChannelCreator<T>{
-    fn open(&mut self){}
+impl<T:Clone> CommunicationObject for ChannelCreator<T>{
+    fn open(&mut self){
+        println!("channel opened");
+    }
 
-    fn close(&mut self){}
+    fn close(&mut self){
+        println!("channel closed");
+    }
 }
