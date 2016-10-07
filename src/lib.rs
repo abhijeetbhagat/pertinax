@@ -13,6 +13,8 @@ pub mod pipe_connection_initiator;
 pub mod communication_object;
 pub mod binding;
 pub mod namedpipe_binding;
+pub mod message;
+pub mod proxy;
 
 use uri::Uri;
 
@@ -26,6 +28,9 @@ mod tests {
     use super::channel_factory::*;
     use super::channel_creator::*;
     use super::endpoint::*;
+    use namedpipe_binding::*;
+    use message::*;
+    use proxy::*;
 
     trait IService{
         fn foo(&self, a:i32);
@@ -33,21 +38,24 @@ mod tests {
     }
 
     #[derive(Clone)]
-    struct Client;
+    struct Client{
+        binding : Binding,
+        proxy : Proxy
+    }
 
     impl IService for Client{
         fn foo(&self, a:i32){
-
+            proxy.send("foo", [(a : i32)]);
         }
 
         fn bar(&self)->i32{
-            0
+            let result = proxy.send("foo", [a]);
         }
     }
     #[test]
     fn test_usage() {
         let c = Client;
-        let mut c : ChannelCreator<&IService> = ChannelCreator::new(&c, None);
+        let mut c : ChannelCreator<&IService> = ChannelCreator::new(&c, Some(box NamedPipeBinding), String::from("localhost"));
         let s : &IService = *c.create_channel(EndPoint);
         assert!(s.bar() == 0);
     }

@@ -6,14 +6,16 @@ use binding::Binding;
 
 pub struct ChannelCreator<T:Clone>{
     channel : Box<T>,
-    binding : Option<Box<Binding>>
+    binding : Option<Box<Binding>>,
+    uri : String
 }
 
 impl<T:Clone> ChannelCreator<T>{
-    pub fn new(channel : T, binding : Option<Box<Binding>>) -> Self{
+    pub fn new(channel : T, binding : Option<Box<Binding>>, uri : String) -> Self{
         ChannelCreator{
             channel : box channel,
-            binding : binding
+            binding : binding,
+            uri : uri,
         }
     }
 }
