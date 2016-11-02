@@ -15,6 +15,7 @@ pub mod binding;
 pub mod namedpipe_binding;
 pub mod message;
 pub mod proxy;
+pub mod binary_encoder;
 
 use uri::Uri;
 
@@ -31,6 +32,7 @@ mod tests {
     use namedpipe_binding::*;
     use message::*;
     use proxy::*;
+    use binary_encoder::*;
 
     trait IService{
         fn foo(&self, a:i32);
@@ -39,24 +41,37 @@ mod tests {
 
     #[derive(Clone)]
     struct Client{
-        binding : Binding,
-        proxy : Proxy
+        //binding : Binding,
+        //proxy : Proxy
     }
 
     impl IService for Client{
         fn foo(&self, a:i32){
-            proxy.send("foo", [(a : i32)]);
+            //proxy.send("foo", [(a : i32)]);
         }
 
         fn bar(&self)->i32{
-            let result = proxy.send("foo", [a]);
+            //let result = proxy.send("foo", [a]);
+            0
         }
     }
     #[test]
     fn test_usage() {
-        let c = Client;
-        let mut c : ChannelCreator<&IService> = ChannelCreator::new(&c, Some(box NamedPipeBinding), String::from("localhost"));
-        let s : &IService = *c.create_channel(EndPoint);
-        assert!(s.bar() == 0);
+        //let c = Client;
+        //let mut c : ChannelCreator<&IService> = ChannelCreator::new(&c, Some(box NamedPipeBinding), String::from("localhost"));
+        //let s : &IService = *c.create_channel(EndPoint);
+        //assert!(s.bar() == 0);
     }
+
+    #[test]
+    fn test_one_byte_encoder(){
+        assert_eq!(one_byte_encoder(17), 0x11);
+    }
+
+    #[test]
+    fn test_two_byte_encoder(){
+        assert_eq!(two_bytes_encoder(145), 0x191);
+        assert_eq!(two_bytes_encoder(5521), 0x2B91);
+    }
+
 }
