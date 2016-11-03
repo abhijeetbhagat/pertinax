@@ -74,4 +74,9 @@ mod tests {
         assert_eq!(two_bytes_encoder(5521), 0x2B91);
     }
 
+    #[test]
+    fn test_string_encoder(){
+        assert_eq!(string_encoder("abc"), vec![0x3, 0x61,0x62,0x63]);
+
+    }
 }
