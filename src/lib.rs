@@ -1,6 +1,7 @@
 #![feature(box_syntax, box_patterns)]
 extern crate uuid;
 extern crate unix_socket;
+extern crate num;
 
 pub mod uri;
 pub mod channel_factory;
@@ -74,6 +75,23 @@ mod tests {
         assert_eq!(two_bytes_encoder(5521), 0x2B91);
     }
 
+    #[test]
+    fn test_three_byte_encoder(){
+        assert_eq!(three_byte_encoder(16384), 0x018080);
+//        assert_eq!(two_bytes_encoder(5521), 0x2B91);
+    }
+    
+    #[test]
+    fn test_four_byte_encoder(){
+        assert_eq!(four_byte_encoder(2097167), 0x0180808F);
+  //      assert_eq!(two_bytes_encoder(5521), 0x2B91);
+    }
+    
+    #[test]
+    fn test_five_byte_encoder(){
+        assert_eq!(five_byte_encoder(268435456), 0x0180808080);
+        //assert_eq!(two_bytes_encoder(5521), 0x2B91);
+    }
     #[test]
     fn test_string_encoder(){
         assert_eq!(string_encoder("abc"), vec![0x3, 0x61,0x62,0x63]);

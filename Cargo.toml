@@ -6,3 +6,4 @@ authors = ["abhijeetbhagat <abhijeet.bhagat@gmx.com>"]
 [dependencies]
 unix_socket="*"
 uuid = { version = "0.2", features = ["serde", "v4"] }
+num = "*"
