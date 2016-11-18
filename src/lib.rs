@@ -97,4 +97,22 @@ mod tests {
         assert_eq!(string_encoder("abc"), vec![0x3, 0x61,0x62,0x63]);
 
     }
+
+    #[test]
+    fn test_binary_encoder(){
+        assert_eq!(binary_encoder(145), vec![0x91,0x01]);
+        assert_eq!(binary_encoder(5521), vec![0x91,0x2B]);
+        assert_eq!(binary_encoder(16384), vec![0x80,0x80,0x01]);
+        assert_eq!(binary_encoder(2097167), vec![0x8F,0x80,0x80,0x01]);
+        assert_eq!(binary_encoder(268435456), vec![0x80,0x80,0x80,0x80,0x01]);
+
+
+
+
+
+
+
+    }
+
+ 
 }
