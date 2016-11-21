@@ -76,6 +76,14 @@ pub fn binary_encoder(value : usize) -> Vec<u8> {
     v
 }
 
+pub fn convertToNumber(v : Vec<u8>) -> u64{
+    let mut data:u64 = 0;
+    for i in (0..v.len()).rev(){
+        data = (data << 8) + v[i] as u64;
+    }
+    data
+}
+
 
 pub fn string_encoder<'a>(input: &'a str)->Vec<u8>{
    let mut v = Vec::new();
