@@ -105,11 +105,11 @@ mod tests {
         assert_eq!(binary_encoder(16384), vec![0x80,0x80,0x01]);
         assert_eq!(binary_encoder(2097167), vec![0x8F,0x80,0x80,0x01]);
         assert_eq!(binary_encoder(268435456), vec![0x80,0x80,0x80,0x80,0x01]);
-        assert_eq!(convertToNumber(binary_encoder(145)), 0x0191);
-        assert_eq!(convertToNumber(binary_encoder(5521)), 0x2B91);
-        assert_eq!(convertToNumber(binary_encoder(16384)), 0x018080);
-        assert_eq!(convertToNumber(binary_encoder(2097167)), 0x0180808F);
-        assert_eq!(convertToNumber(binary_encoder(268435456)), 0x0180808080);
+        assert_eq!(vector_to_integer(binary_encoder(145).as_slice()), 0x0191);
+        assert_eq!(vector_to_integer(binary_encoder(5521).as_slice()), 0x2B91);
+        assert_eq!(vector_to_integer(binary_encoder(16384).as_slice()), 0x018080);
+        assert_eq!(vector_to_integer(binary_encoder(2097167).as_slice()), 0x0180808F);
+        assert_eq!(vector_to_integer(binary_encoder(268435456).as_slice()), 0x0180808080);
 
     }
 

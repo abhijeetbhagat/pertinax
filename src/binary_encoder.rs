@@ -76,7 +76,7 @@ pub fn binary_encoder(value : usize) -> Vec<u8> {
     v
 }
 
-pub fn convertToNumber(v : Vec<u8>) -> u64{
+pub fn vector_to_integer(v : &[u8]) -> u64{
     let mut data:u64 = 0;
     for i in (0..v.len()).rev(){
         data = (data << 8) + v[i] as u64;
